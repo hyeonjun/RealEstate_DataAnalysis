@@ -1,20 +1,16 @@
 from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
 import pandas as pd
 import folium
 import json
+import os
 import warnings
-import jsonify
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__) # flask 앱 생성
-
-# config.py 설정 파일
-# app.config.from_object('config')
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.secret_key = 'encoreteamproject'
-# db = SQLAlchemy(app)
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(ROOT_DIR, 'static\\data\\er_edu_hos.xlsx')
+GEO_PATH = os.path.join(ROOT_DIR, 'static\\data\\TL_SCCO_CTPRVN_WGS84.json')
 
 # 파일 연동
 @app.route('/') # 라우팅, '/'는 접속 시, root 경로
@@ -24,10 +20,10 @@ def home(): # '/'과 매칭되는 함수 root 경로 시, 페이지에 작동할
 
 @app.route('/map')
 def get_map():
-    file_path = 'C:\\Users\\Playdata\\PycharmProjects\\TeamProject\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
-    er_ap_job_df = pd.read_excel(file_path, index_col=0)
-    geo_path = 'C:\\Users\\Playdata\\PycharmProjects\\TeamProject\\RealEstate\\app\\static\\data\\TL_SCCO_CTPRVN_WGS84.json'
-    geo_str = json.load(open(geo_path, encoding='utf-8'))
+    # file_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
+    er_ap_job_df = pd.read_excel(FILE_PATH, index_col=0)
+    # geo_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\TL_SCCO_CTPRVN_WGS84.json'
+    geo_str = json.load(open(GEO_PATH, encoding='utf-8'))
 
     types = request.args.get('types')
     location = request.args.get('location')
@@ -71,8 +67,8 @@ def get_map():
 
 @app.route("/chart")
 def get_chart():
-    file_path = 'C:\\Users\\Playdata\\PycharmProjects\\TeamProject\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
-    er_ap_job_df = pd.read_excel(file_path, index_col=0)
+    # file_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
+    er_ap_job_df = pd.read_excel(FILE_PATH, index_col=0)
     x = list(er_ap_job_df.index)
     y = [list(er_ap_job_df['고용자수대비평균매매가']), list(er_ap_job_df['고용자수']), list(er_ap_job_df['아파트평균매매가격'])]
     label = ['고용자수대비평균매매가', '고용자수', '아파트평균매매가격']
