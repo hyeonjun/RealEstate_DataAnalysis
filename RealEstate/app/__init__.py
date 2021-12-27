@@ -11,7 +11,7 @@ app = Flask(__name__) # flask 앱 생성
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH = os.path.join(ROOT_DIR, 'static\\data\\er_edu_hos.xlsx')
 GEO_PATH = os.path.join(ROOT_DIR, 'static\\data\\TL_SCCO_CTPRVN_WGS84.json')
-
+LABEL = [['고용자수대비평균매매가', '고용자수', '아파트평균매매가격'], ['병원비율', '총병원수', '아파트평균매매가격'], ['아파트/사설학원수', '사설학원수', '아파트평균매매가격']]
 # 파일 연동
 @app.route('/') # 라우팅, '/'는 접속 시, root 경로
 def home(): # '/'과 매칭되는 함수 root 경로 시, 페이지에 작동할 메소드
@@ -20,9 +20,7 @@ def home(): # '/'과 매칭되는 함수 root 경로 시, 페이지에 작동할
 
 @app.route('/map')
 def get_map():
-    # file_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
-    er_ap_job_df = pd.read_excel(FILE_PATH, index_col=0)
-    # geo_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\TL_SCCO_CTPRVN_WGS84.json'
+    df_file = pd.read_excel(FILE_PATH, index_col=0)
     geo_str = json.load(open(GEO_PATH, encoding='utf-8'))
 
     types = request.args.get('types')
@@ -34,9 +32,12 @@ def get_map():
 
     def print_map(location, types):
         if not location:
-            map_df = er_ap_job_df
+            map_df = df_file
         else:
-            map_df = er_ap_job_df.loc[location]
+            map_df = df_file.loc[location]
+
+        label_list = LABEL[int(types)]
+
         map = folium.Map(
             height=680,
             location=[35.8002, 127.854],
@@ -48,12 +49,12 @@ def get_map():
         map.get_root().html.add_child(folium.Element(scroll_remove))
 
         map.choropleth(geo_data=geo_str,
-                       data=map_df['고용자수대비평균매매가'],
-                       columns=[map_df.index, map_df['고용자수대비평균매매가']],
+                       data=map_df[label_list[0]],
+                       columns=[map_df.index, map_df[label_list[0]]],
                        fill_color='PuRd',
                        key_on='feature.id')
 
-        for sido, price, lat, lng in zip(map_df.index, map_df['아파트평균매매가격'], map_df['위도'], map_df['경도']):
+        for sido, price, lat, lng in zip(map_df.index, map_df[label_list[2]], map_df['위도'], map_df['경도']):
             folium.Marker(
                 location=[lat, lng],
                 popup=f'<pre>{sido}<br/>평단가: {price}</pre>',
@@ -67,12 +68,25 @@ def get_map():
 
 @app.route("/chart")
 def get_chart():
-    # file_path = 'C:\\Users\\Playdata\\PycharmProjects\\RealEstate_DataAnalysis\\RealEstate\\app\\static\\data\\er_ap_job_df.xlsx'
-    er_ap_job_df = pd.read_excel(FILE_PATH, index_col=0)
-    x = list(er_ap_job_df.index)
-    y = [list(er_ap_job_df['고용자수대비평균매매가']), list(er_ap_job_df['고용자수']), list(er_ap_job_df['아파트평균매매가격'])]
-    label = ['고용자수대비평균매매가', '고용자수', '아파트평균매매가격']
-    data = {'x': x, 'y': y, 'label':label}
+    df_file = pd.read_excel(FILE_PATH, index_col=0)
+
+    types = request.args.get('types')
+    location = request.args.get('location')
+    if types == None:
+        types = '0'
+    if location == None:
+        location = []
+
+    if not location:
+        map_df = df_file
+    else:
+        map_df = df_file.loc[location]
+
+    label_list = LABEL[int(types)]
+
+    x = list(map_df.index)
+    y = [list(map_df[label_list[0]]), list(map_df[label_list[1]]), list(map_df[label_list[2]])]
+    data = {'x': x, 'y': y, 'label':label_list}
     return data
 
 if __name__ == '__main__':

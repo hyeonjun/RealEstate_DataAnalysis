@@ -15,10 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <title>아파트 평균 매매가 분석</title>
     <script>
-        let factorData = "아파트평균가";
+        let factorData = "0";
         $(document).on("click", ".radioData", function (){
-            factorData = $("input[name=factor]:checked").val()
-            get_chart_data();
+            factorData = $("input[name=factor]:checked").val();
+            get_chart_data(factorData);
             $.ajax({
                 url:"/map",
                 type:"GET",
@@ -36,11 +36,11 @@
             document.getElementById('tabB').className = 'ls';
             let factor = ['아파트평균가', '일자리대비', '병원수대비', '대중교통대비','학생수대비'];
             let sideMenuList = "<li class='nav-item'>" +
-                "<input type='radio' class='radioData nav-link active' title="+factor[0]+" id="+factor[0]+" name='factor' checked value='아파트평균가' />" +
+                "<input type='radio' class='radioData nav-link active' title="+factor[0]+" id="+factor[0]+" name='factor' checked value='0' />" +
                 "<label for="+factor[0]+" >"+factor[0]+"</label></li>";
             for (let i=1; i<factor.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='radio' class='radioData nav-link active' title="+factor[i]+" id="+factor[i]+" name='factor' value="+factor[i]+" />"+
+                    "<input type='radio' class='radioData nav-link active' title="+factor[i]+" id="+factor[i]+" name='factor' value="+i+" />"+
                     "<label for="+factor[i]+" >"+factor[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);
@@ -51,19 +51,23 @@
             document.getElementById('tabB').className = 'ls selected';
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
             let sideMenuList = "<li class='nav-item'>" +
-                "<input type='checkbox' class='nav-link active' title="+location[0]+" id="+location[0]+" name='location' checked value='전국' />" +
+                "<input type='checkbox' class='nav-link active' title="+location[0]+" id="+location[0]+" name='location' checked value='0' />" +
                 "<label for="+location[0]+" >"+location[0]+"</label></li><li class='nav-item'>";
             for (let i=1; i<location.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='checkbox' class='nav-link active' title="+location[i]+" id="+location[0]+" name='location' value="+location[i]+" />" +
+                    "<input type='checkbox' class='nav-link active' title="+location[i]+" id="+location[0]+" name='location' value="+i+" />" +
                     "<label for="+location[i]+" >"+location[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);
         }
-        function get_chart_data(){
+        function get_chart_data(types){
             $.ajax({
                 url:"/chart",
                 type:"GET",
+                data:{
+                    types:types,
+                    location:[]
+                },
                 success:function(data){
                     print_chart(data.x, data.y, data.label);
                 }
@@ -71,10 +75,15 @@
         }
 
         function print_chart(labels, data, label){
+            $('.chartjs-hidden-iframe').remove();
             let color = ['rgb(199,36,32)', 'rgb(32,143,65)', 'rgb(37,77,150)'];
             for(let i=0; i<3; i++){
-                let name = 'myChart' + String(i+1);
-                let ctx = document.getElementById(name).getContext('2d');
+                let chartName = 'myChart' + String(i+1);
+                let tdName = 'chart-container-' + String(i+1);
+                $('#'+chartName).remove();
+                $('#'+tdName).append("<canvas id='"+chartName+"'></canvas>")
+                let ctx = document.getElementById(chartName).getContext('2d');
+
                 let cht = {
                     type:'line',
                     data:{
@@ -114,13 +123,13 @@
             <div id="chart">
                 <table class="chart">
                     <tr>
-                        <td><canvas id="myChart1"></canvas></td>
+                        <td id="chart-container-1"><canvas id="myChart1"></canvas></td>
                     </tr>
                     <tr>
-                        <td><canvas id="myChart2"></canvas></td>
+                        <td id="chart-container-2"><canvas id="myChart2"></canvas></td>
                     </tr>
                     <tr>
-                        <td><canvas id="myChart3"></canvas></td>
+                        <td id="chart-container-3"><canvas id="myChart3"></canvas></td>
                     </tr>
                     <script>
                         let labels = {{ data.x|safe }};
