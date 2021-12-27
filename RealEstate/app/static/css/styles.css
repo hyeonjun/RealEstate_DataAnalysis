@@ -1,0 +1,271 @@
+/*
+ * Sidebar
+ */
+#all {
+  position: absolute;
+  width:100%;
+  height: 100%;
+  padding-top:41px;
+}
+
+#sidebar {
+  position: relative;
+  float:left;
+  height:100%;
+  overflow: auto;
+  width: 15%;
+  z-index: 100;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+#main {
+  position: relative;
+  float:right;
+  width:85%;
+  height:100%;
+  padding: 10px 10px 10px 10px;
+}
+
+#map {
+  padding-to:5px;
+  position: fixed;
+  float:left;
+  width:40%;
+  height:100%;
+}
+
+#chart {
+  float:right;
+  width: 50%;
+  height: 100%;
+}
+
+table {
+  width: 100%;
+  height:100%;
+  padding: 10px 10px 10px 10px;
+}
+
+canvas {
+  padding-right: 10px;
+  width: 100%!important;
+  height: 100%!important;
+}
+
+#sidebarMenu {
+  height: 100%;
+  overflow: auto;
+}
+
+/*#sidebarMenu::-webkit-scrollbar {*/
+/*  width: 10px;*/
+/*}*/
+/*#sidebarMenu::-webkit-scrollbar-thumb {*/
+/*  background-color: #2f3542;*/
+/*  border-radius: 10px;*/
+/*  background-clip: padding-box;*/
+/*  border: 2px solid transparent;*/
+/*}*/
+
+body {
+  overflow: hidden;
+}
+
+#main{
+  overflow: auto;
+}
+
+#sidebarMenu::-webkit-scrollbar, #map::-webkit-scrollbar, #main::-webkit-scrollbar {
+  width: 10px;
+}
+#sidebarMenu::-webkit-scrollbar-thumb, #map::-webkit-scrollbar-thumb, #main::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* {*/
+/*  width: 10px;*/
+/*}*/
+/* {*/
+/*  background-color: #2f3542;*/
+/*  border-radius: 10px;*/
+/*  background-clip: padding-box;*/
+/*  border: 2px solid transparent;*/
+/*}*/
+
+
+/*#sidebarMenu::-webkit-scrollbar-track {*/
+/*  background-color: grey;*/
+/*  border-radius: 10px;*/
+/*  box-shadow: inset 0px 0px 5px white;*/
+/*}*/
+
+/*.sidebar-sticky {*/
+/*  position: relative;*/
+/*  top: 0;*/
+/*  overflow-x: hidden;*/
+/*  overflow-y: auto; !* Scrollable contents if viewport is shorter than content. *!*/
+/*}*/
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+#sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+#sidebar .nav-link.active {
+  color: #007bff;
+}
+
+#sidebar .nav-link:hover .feather,
+#sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+ul, li {
+  margin:0;
+  padding:0;
+}
+
+.ls{
+  float: left;
+  padding: 10px 10px 0 10px;
+  width: 50%;
+  text-align: center;
+  height: 100%;
+  font-size: 18px;
+}
+
+.a_ls, .b_ls{
+  color: #171717;
+  padding-top: 13px;
+  position: inherit;
+  display: block;
+  height: 100%;
+}
+
+strong {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 70%;
+}
+
+#selectTabs .ls.selected a strong:before{
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  background: #403cde;
+  width: 100%;
+  height: 4px;
+}
+
+.a_ls:hover, .b_ls:hover{
+  color:#0056b3;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#mList1{
+  margin: 0 0;
+  padding:0 10px;
+  height:100%;
+}
+
+#mList1 li input[type="radio"] + label{
+  display:block;
+  padding:9px 10px 9px 35px;
+}
+
+#mList1 li input[type="radio"] + label::before{
+  top:10px;
+  left:10px;
+}
+
+#mList1 li input[type="radio"]:checked + label{
+  background-color:#fff;
+  border:1px solid #403cde;
+  border-radius:4px;
+}
+
+#mList1 li input[type="radio"]:checked + label::before{}
+
+input[type="radio"]{
+  position:absolute;
+  border:0;
+  padding:0;
+  width:23px;
+  height:23px;
+  overflow:hidden;
+  clip:rect(0px, 0px, 0px, 0px);
+}
+
+input[type="radio"] + label {
+  position: relative;
+  display: inline-block;
+  color: #171717;
+  font-size: 14px;
+  padding: 0 0 0 25px;
+  vertical-align: middle;
+  /*line-height: 23px;*/
+  line-height:18px;
+  /*padding-top:0px;*/
+}
+
+input[type="radio"] + label:before{
+  content: "";
+  position: absolute;
+  border:0;
+  background:url('../image/radio1.png') 0 0 no-repeat;
+  width:18px;
+  height:18px;
+  line-height:18px;
+  overflow: hidden;
+  margin: 0; padding: 0;
+}
+
+input[type="radio"]:checked + label::before{
+  background-image:url('../image/radio2.png');
+}
+
+input[type="radio"]:focus + label::before{
+  background-image:url('../image/radio1.png');
+}
+
+input[type="radio"]:checked:focus + label::before{
+  background-image:url('../image/radio2.png');
+}
+
+label {
+  margin-right: 3px;
+}
+
+
+
+/*tr {*/
+/*  width: 600px;*/
+/*  height: 233px;*/
+/*  right:0;*/
+/*  top:10px;*/
+/*  bottom:0;*/
+/*  */
+/*}*/
