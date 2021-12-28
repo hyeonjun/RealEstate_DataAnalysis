@@ -191,25 +191,23 @@ strong {
   height:100%;
 }
 
-#mList1 li input[type="radio"] + label{
+#mList1 li input[type="radio"] + label, #mList1 li input[type="checkbox"] + label{
   display:block;
   padding:9px 10px 9px 35px;
 }
 
-#mList1 li input[type="radio"] + label::before{
+#mList1 li input[type="radio"] + label::before, #mList1 li input[type="checkbox"] + label::before{
   top:10px;
   left:10px;
 }
 
-#mList1 li input[type="radio"]:checked + label{
+#mList1 li input[type="radio"]:checked + label, #mList1 li input[type="checkbox"]:checked + label{
   background-color:#fff;
   border:1px solid #403cde;
   border-radius:4px;
 }
 
-#mList1 li input[type="radio"]:checked + label::before{}
-
-input[type="radio"]{
+input[type="radio"], input[type="checkbox"]{
   position:absolute;
   border:0;
   padding:0;
@@ -219,7 +217,7 @@ input[type="radio"]{
   clip:rect(0px, 0px, 0px, 0px);
 }
 
-input[type="radio"] + label {
+input[type="radio"] + label, input[type="checkbox"] + label {
   position: relative;
   display: inline-block;
   color: #171717;
@@ -231,7 +229,7 @@ input[type="radio"] + label {
   /*padding-top:0px;*/
 }
 
-input[type="radio"] + label:before{
+input[type="radio"] + label:before, input[type="checkbox"] + label:before{
   content: "";
   position: absolute;
   border:0;
@@ -243,15 +241,15 @@ input[type="radio"] + label:before{
   margin: 0; padding: 0;
 }
 
-input[type="radio"]:checked + label::before{
+input[type="radio"]:checked + label::before, input[type="checkbox"]:checked + label::before{
   background-image:url('../image/radio2.png');
 }
 
-input[type="radio"]:focus + label::before{
+input[type="radio"]:focus + label::before, input[type="checkbox"]:focus + label::before{
   background-image:url('../image/radio1.png');
 }
 
-input[type="radio"]:checked:focus + label::before{
+input[type="radio"]:checked:focus + label::before, input[type="checkbox"]:checked:focus + label::before{
   background-image:url('../image/radio2.png');
 }
 

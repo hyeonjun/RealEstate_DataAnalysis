@@ -52,10 +52,10 @@
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
             let sideMenuList = "<li class='nav-item'>" +
                 "<input type='checkbox' class='nav-link active' title="+location[0]+" id="+location[0]+" name='location' checked value='0' />" +
-                "<label for="+location[0]+" >"+location[0]+"</label></li><li class='nav-item'>";
+                "<label for="+location[0]+" >"+location[0]+"</label></li>";
             for (let i=1; i<location.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='checkbox' class='nav-link active' title="+location[i]+" id="+location[0]+" name='location' value="+i+" />" +
+                    "<input type='checkbox' class='nav-link active' title="+location[i]+" id="+location[i]+" name='location' value="+i+" />" +
                     "<label for="+location[i]+" >"+location[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);
