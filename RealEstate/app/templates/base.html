@@ -31,6 +31,13 @@
                 }
             });
         });
+        $(document).on('click','#전국',function(){
+            if($('#전국').is(':checked')){
+                $('input[name=location').prop('checked',true);
+            }else{
+                $('input[name=location').prop('checked',false);
+            }
+        });
         function changeF() {
             document.getElementById('tabA').className = 'ls selected';
             document.getElementById('tabB').className = 'ls';
@@ -50,7 +57,8 @@
             document.getElementById('tabA').className = 'ls';
             document.getElementById('tabB').className = 'ls selected';
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
-            let sideMenuList = "<li class='nav-item'>" +
+            let sideMenuList =  "<input type = 'button' class = 'btn btn-outline-primary mr-1 mb-2' value='검색' />" +
+                "<li class='nav-item'>" +
                 "<input type='checkbox' class='nav-link active' title="+location[0]+" id="+location[0]+" name='location' checked value='0' />" +
                 "<label for="+location[0]+" >"+location[0]+"</label></li>";
             for (let i=1; i<location.length; i++){
