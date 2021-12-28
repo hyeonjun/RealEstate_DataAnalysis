@@ -24,7 +24,7 @@ def get_map():
     geo_str = json.load(open(GEO_PATH, encoding='utf-8'))
 
     types = request.args.get('types')
-    location = request.args.get('location')
+    location = request.form.getlist('location')
     if types == None:
         types = '0'
     if location == None:
@@ -71,7 +71,7 @@ def get_chart():
     df_file = pd.read_excel(FILE_PATH, index_col=0)
 
     types = request.args.get('types')
-    location = request.args.get('location')
+    location = request.form.getlist('location')
     if types == None:
         types = '0'
     if location == None:
