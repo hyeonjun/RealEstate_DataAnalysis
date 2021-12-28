@@ -18,7 +18,7 @@
         let factorData = "0";
         $(document).on("click", ".radioData", function (){
             factorData = $("input[name=factor]:checked").val();
-            get_chart_data(factorData);
+            get_chart_data(factorData,[]);
             $.ajax({
                 url:"/map",
                 type:"GET",
@@ -31,6 +31,33 @@
                 }
             });
         });
+        $(document).on("click", ".chkData", function (){
+            dataLen = $("input[name=location]:checked").length;
+            let location= new Array();
+            if(dataLen>1){
+                $("input[name='location']:checked").each(function(e){
+                    location.push($(this).val())
+                })
+            }
+            /*전국이면 array빈값으로 */
+            if (location.indexOf("전국") != -1 ){
+                location = [];
+            };
+            get_chart_data(factorData,location);
+            jQuery.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
+            $.ajax({
+                url:"/map",
+                type:"GET",
+                data:{
+                    types:factorData,
+                    location:location
+                },
+                success:function(data){
+                    $('#map').html(data);
+                }
+            });
+        });
+
         $(document).on('click','#전국',function(){
             if($('#전국').is(':checked')){
                 $('input[name=location]').prop('checked',true);
@@ -67,7 +94,7 @@
             document.getElementById('tabA').className = 'ls';
             document.getElementById('tabB').className = 'ls selected';
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
-            let sideMenuList = "<input type = 'button' class = 'btn btn-outline-primary mr-1 mb-2' value='검색' />" +
+            let sideMenuList = "<input type = 'button' class = 'chkData btn btn-outline-primary mr-1 mb-2' value='검색' />" +
                 "<li class='nav-item'>" +
                 "<input type='checkbox' class='checkboxData nav-link active' title="+location[0]+" id="+location[0]+" name='checkAll' value='전국' />" +
                 "<label for="+location[0]+" >"+location[0]+"</label></li>";
@@ -78,20 +105,25 @@
             }
             $('#mList1').html(sideMenuList);
         }
-        function get_chart_data(types){
+        function get_chart_data(types, location){
+            console.log(types, location);
+            console.log(typeof(location))
+            location = JSON.stringify(location)
+            console.log(typeof(location))
+            console.log(location)
             $.ajax({
                 url:"/chart",
                 type:"GET",
                 data:{
                     types:types,
-                    location:[]
+                    location:location
                 },
                 success:function(data){
                     print_chart(data.x, data.y, data.label);
                 }
             });
         }
-
+        
         function print_chart(labels, data, label){
             $('.chartjs-hidden-iframe').remove();
             let color = ['rgb(199,36,32)', 'rgb(32,143,65)', 'rgb(37,77,150)'];

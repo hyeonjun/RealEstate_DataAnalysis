@@ -71,7 +71,17 @@ def get_chart():
     df_file = pd.read_excel(FILE_PATH, index_col=0)
 
     types = request.args.get('types')
-    location = request.form.getlist('location')
+    location = request.args.get('location')
+    #location = ['부산','서울']
+
+    cut = "'[]\""
+    if location != None:
+        location = ''.join(x for x in location if x not in cut)
+        location = location.split(',')
+    print(types)
+    print(location)
+    print( type(location) )
+    
     if types == None:
         types = '0'
     if location == None:
