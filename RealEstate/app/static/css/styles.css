@@ -229,7 +229,29 @@ input[type="radio"] + label, input[type="checkbox"] + label {
   /*padding-top:0px;*/
 }
 
-input[type="radio"] + label:before, input[type="checkbox"] + label:before{
+/*chkbox*/
+input[type="checkbox"] + label:before {
+  content: "";
+  position: absolute;
+  border:0;
+  background:url('../image/chkbox.png') 0 0 no-repeat;
+  width:18px;
+  height:18px;
+  line-height:18px;
+  overflow: hidden;
+  margin: 0; padding: 0;
+}
+input[type="checkbox"]:checked + label::before{
+  background-image:url('../image/chkedbox.png');
+}
+input[type="checkbox"]:focus + label::before{
+  background-image:url('../image/chkbox.png');
+}
+input[type="checkbox"]:checked:focus + label::before{
+  background-image:url('../image/chkedbox.png');
+}
+/*radio*/
+input[type="radio"] + label:before{
   content: "";
   position: absolute;
   border:0;
@@ -240,16 +262,13 @@ input[type="radio"] + label:before, input[type="checkbox"] + label:before{
   overflow: hidden;
   margin: 0; padding: 0;
 }
-
-input[type="radio"]:checked + label::before, input[type="checkbox"]:checked + label::before{
+input[type="radio"]:checked + label::before{
   background-image:url('../image/radio2.png');
 }
-
-input[type="radio"]:focus + label::before, input[type="checkbox"]:focus + label::before{
+input[type="radio"]:focus + label::before{
   background-image:url('../image/radio1.png');
 }
-
-input[type="radio"]:checked:focus + label::before, input[type="checkbox"]:checked:focus + label::before{
+input[type="radio"]:checked:focus + label::before{
   background-image:url('../image/radio2.png');
 }
 
