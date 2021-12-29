@@ -11,7 +11,7 @@ app = Flask(__name__) # flask 앱 생성
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH = os.path.join(ROOT_DIR, 'static\\data\\last_df.xlsx')
 GEO_PATH = os.path.join(ROOT_DIR, 'static\\data\\TL_SCCO_CTPRVN_WGS84.json')
-LABEL = [['고용자수대비평균매매가', '고용자수', '아파트평균매매가격'], ['고용자수대비평균매매가', '고용자수', '아파트평균매매가격'], ['병원비율', '총병원수', '아파트평균매매가격'],['매매가대중교통비율', '일별평균대중교통사용자수', '아파트평균매매가격'], ['아파트/사설학원수', '사설학원수', '아파트평균매매가격']]
+LABEL = [['고용자수대비평균매매가', '고용자수', '아파트평균매매가'], ['고용자수대비평균매매가', '고용자수', '아파트평균매매가'], ['병원수대비평균매매가', '총병원수', '아파트평균매매가'],['대중교통사용자수대비평균매매가', '일별평균대중교통사용자수', '아파트평균매매가'], ['학원수대비평균매매가', '사설학원수', '아파트평균매매가']]
 # 파일 연동
 @app.route('/') # 라우팅, '/'는 접속 시, root 경로
 def home(): # '/'과 매칭되는 함수 root 경로 시, 페이지에 작동할 메소드
@@ -25,14 +25,14 @@ def get_map():
 
     types = request.args.get('types')
     location = request.args.get('location')
-    print("map1 :", location)
+
     if location in [None, ""]:
         location = []
     elif location != None:
         location = [i[1:-1] for i in location[1:-1].split(",")]
     if types == None:
         types = '0'
-    print("map2 :", location)
+
     def print_map(location, types):
         if not location:
             map_df = df_file
@@ -75,7 +75,7 @@ def get_chart():
 
     types = request.args.get('types')
     location = request.args.get('location')
-    print("chart1 :", location)
+
     if location in [None, ""]:
         location = []
     elif location != None:
@@ -83,7 +83,6 @@ def get_chart():
     if types == None:
         types = '0'
 
-    print("chart2 :", location)
     if not location:
         map_df = df_file
     else:
