@@ -18,7 +18,7 @@
         let factorData = "0";
         $(document).on("click", ".radioData", function (){
             factorData = $("input[name=factor]:checked").val();
-            get_chart_data(factorData,"No");
+            get_chart_data(factorData,"");
             $.ajax({
                 url:"/map",
                 type:"GET",
@@ -43,9 +43,9 @@
             /*전국이면 array빈값으로 */
             if (location.indexOf("전국") != -1 ){
                 location = [];
-            };
+            }
+            location = JSON.stringify(location)
             get_chart_data(factorData,location);
-            jQuery.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
             $.ajax({
                 url:"/map",
                 type:"GET",
@@ -71,8 +71,8 @@
             let total = $('input[name=location]').length;
             let checked = $('input[name=location]:checked').length;
 
-            if(total!=checked) $('input[name=checkAll').prop("checked",false);
-            else $('input[name=checkAll').prop("checked",true);
+            if(total!=checked) $('input[name=checkAll]').prop("checked",false);
+            else $('input[name=checkAll]').prop("checked",true);
         });
 
 
@@ -97,21 +97,16 @@
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
             let sideMenuList = "<input type = 'button' class = 'chkData btn btn-outline-primary mr-1 mb-2' value='검색' />" +
                 "<li class='nav-item'>" +
-                "<input type='checkbox' class='checkboxData nav-link active' title="+location[0]+" id="+location[0]+" name='checkAll' value='전국' />" +
+                "<input type='checkbox' class='checkboxData nav-link active' title="+location[0]+" id="+location[0]+" name='checkAll' value='전국' checked />" +
                 "<label for="+location[0]+" >"+location[0]+"</label></li>";
             for (let i=1; i<location.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='checkbox' class='checkboxData nav-link active' title="+location[i]+" id="+location[i]+" name='location' value="+location[i]+" />" +
+                    "<input type='checkbox' class='checkboxData nav-link active' title="+location[i]+" id="+location[i]+" name='location' value="+location[i]+" checked />" +
                     "<label for="+location[i]+" >"+location[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);
         }
         function get_chart_data(types, location){
-            console.log(types, location);
-            console.log(typeof(location))
-            location = JSON.stringify(location)
-            console.log(typeof(location))
-            console.log(location)
             $.ajax({
                 url:"/chart",
                 type:"GET",

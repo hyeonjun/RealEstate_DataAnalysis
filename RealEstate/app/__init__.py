@@ -24,10 +24,13 @@ def get_map():
     geo_str = json.load(open(GEO_PATH, encoding='utf-8'))
 
     types = request.args.get('types')
-    location = request.form.getlist('location')
+    location = request.args.get('location')
+
+    if location != None:
+        location = [i[1:-1] for i in location[1:-1].split(",")]
     if types == None:
         types = '0'
-    if location == None:
+    if location in [None, ""]:
         location = []
 
     def print_map(location, types):
@@ -72,22 +75,12 @@ def get_chart():
 
     types = request.args.get('types')
     location = request.args.get('location')
-    #location = ['부산','서울']
 
-    cut = "'[]\""
     if location != None:
-        location = ''.join(x for x in location if x not in cut)
-        location = location.split(',')
-    
-    print(types)
-    print(location)
-    print( type(location) )
-
+        location = [i[1:-1] for i in location[1:-1].split(",")]
     if types == None:
         types = '0'
-    if location == None:
-        location = []
-    elif 'No' in location:
+    if location in [None, ""]:
         location = []
 
     if not location:
