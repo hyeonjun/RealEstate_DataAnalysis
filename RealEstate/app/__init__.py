@@ -25,14 +25,14 @@ def get_map():
 
     types = request.args.get('types')
     location = request.args.get('location')
-
-    if location != None:
+    print("map1 :", location)
+    if location in [None, ""]:
+        location = []
+    elif location != None:
         location = [i[1:-1] for i in location[1:-1].split(",")]
     if types == None:
         types = '0'
-    if location in [None, ""]:
-        location = []
-
+    print("map2 :", location)
     def print_map(location, types):
         if not location:
             map_df = df_file
@@ -75,14 +75,15 @@ def get_chart():
 
     types = request.args.get('types')
     location = request.args.get('location')
-
-    if location != None:
+    print("chart1 :", location)
+    if location in [None, ""]:
+        location = []
+    elif location != None:
         location = [i[1:-1] for i in location[1:-1].split(",")]
     if types == None:
         types = '0'
-    if location in [None, ""]:
-        location = []
 
+    print("chart2 :", location)
     if not location:
         map_df = df_file
     else:
