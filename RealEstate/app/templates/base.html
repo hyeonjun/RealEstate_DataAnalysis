@@ -62,6 +62,7 @@
         $(document).on('click','#전국',function(){
             if($('#전국').is(':checked')){
                 $('input[name=location]').prop('checked',true);
+                
             }else{
                 $('input[name=location]').prop('checked',false);
             }
@@ -73,39 +74,52 @@
 
             if(total!=checked) $('input[name=checkAll]').prop("checked",false);
             else $('input[name=checkAll]').prop("checked",true);
+
         });
 
+         $(document).on('click','.checkboxData', function(){
+            var chk = $(this).attr("id")
+            chkedFalseLocation.push(chk)
+        })
 
         function changeF() {
             document.getElementById('tabA').className = 'ls selected';
             document.getElementById('tabB').className = 'ls';
             let factor = ['아파트평균가', '일자리대비', '병원수대비', '대중교통대비','학생수대비'];
             let sideMenuList = "<li class='nav-item'>" +
-                "<input type='radio' class='radioData nav-link active' title="+factor[0]+" id="+factor[0]+" name='factor' value='0' />" +
+                "<input type='radio' class='radioData nav-link active' title="+factor[0]+" id="+factor[0]+" name='factor' value='0' checked />" +
                 "<label for="+factor[0]+" >"+factor[0]+"</label></li>";
             for (let i=1; i<factor.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='radio' class='radioData nav-link active' title="+factor[i]+" id="+factor[i]+" name='factor' value="+i+" />"+
+                    "<input type='radio' class='radioData nav-link active' title="+factor[i]+" id="+factor[i]+" name='factor' value="+i+" checked />"+
                     "<label for="+factor[i]+" >"+factor[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);
             let clickedId = "input[id='" + factor[parseInt(factorData)] + "']";
             $(clickedId).prop('checked',true);
         }
+        var chkedLocation = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
+        var chkedFalseLocation = []
         function changeL() {
             document.getElementById('tabA').className = 'ls';
             document.getElementById('tabB').className = 'ls selected';
             let location = ['전국','서울','인천','광주','대구','울산','대전','부산','세종','경기','강원','충남','충북','경북','경남','전북','전남','제주'];
             let sideMenuList = "<input type = 'button' class = 'chkData btn btn-outline-primary mr-1 mb-2' value='검색' />" +
                 "<li class='nav-item'>" +
-                "<input type='checkbox' class='checkboxData nav-link active' title="+location[0]+" id="+location[0]+" name='checkAll' value='전국' checked />" +
+                "<input type='checkbox' class='checkboxData nav-link active' title="+location[0]+" id="+location[0]+" name='checkAll' checked value='전국' />" +
                 "<label for="+location[0]+" >"+location[0]+"</label></li>";
             for (let i=1; i<location.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='checkbox' class='checkboxData nav-link active' title="+location[i]+" id="+location[i]+" name='location' value="+location[i]+" checked />" +
+                    "<input type='checkbox' class='checkboxData nav-link active' title="+location[i]+" id="+location[i]+" name='location' checked value="+location[i]+" />" +
                     "<label for="+location[i]+" >"+location[i]+"</label></li>";
             }
+            
             $('#mList1').html(sideMenuList);
+            for( var i = 0; i<chkedFalseLocation.length; i++){
+                let clickedId = "input[id='" + chkedFalseLocation[i] + "']";
+                $(clickedId).prop('checked',false);
+            }
+           
         }
         function get_chart_data(types, location){
             $.ajax({
