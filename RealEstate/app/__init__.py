@@ -78,13 +78,16 @@ def get_chart():
     if location != None:
         location = ''.join(x for x in location if x not in cut)
         location = location.split(',')
+    
     print(types)
     print(location)
     print( type(location) )
-    
+
     if types == None:
         types = '0'
     if location == None:
+        location = []
+    elif 'No' in location:
         location = []
 
     if not location:
