@@ -82,6 +82,10 @@
             chkedFalseLocation.push(chk)
         })
 
+        $(document).on('click','.eachRadio', function(){
+            chkedFalseLocation = [];
+        })
+
         function changeF() {
             document.getElementById('tabA').className = 'ls selected';
             document.getElementById('tabB').className = 'ls';
@@ -91,7 +95,7 @@
                 "<label for="+factor[0]+" >"+factor[0]+"</label></li>";
             for (let i=1; i<factor.length; i++){
                 sideMenuList += "<li class='nav-item'>" +
-                    "<input type='radio' class='radioData nav-link active' title="+factor[i]+" id="+factor[i]+" name='factor' value="+i+" checked />"+
+                    "<input type='radio' class='radioData nav-link active eachRadio' title="+factor[i]+" id="+factor[i]+" name='factor' value="+i+" checked />"+
                     "<label for="+factor[i]+" >"+factor[i]+"</label></li>";
             }
             $('#mList1').html(sideMenuList);

@@ -22,7 +22,7 @@
                 </li>
                 {% for i in range(1, factor|length) %}
                 <li class="nav-item">
-                    <input type="radio" class="radioData nav-link active" title={{ factor[i]|safe }} name="factor" id={{ factor[i]|safe }} value={{ i|string }} />
+                    <input type="radio" class="radioData nav-link active eachRadio" title={{ factor[i]|safe }} name="factor" id={{ factor[i]|safe }} value={{ i|string }} />
                     <label for={{ factor[i]|safe }} >{{ factor[i]|safe }}</label>
                 </li>
                 {% endfor %}
